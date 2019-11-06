@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel ="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Staatliches&display=swap" rel="stylesheet">
+    <title>Rock Paper Scissors Boom!</title>
+</head>
+<body>
+    <div class="container">
+
+        <div class="game-title">
+            <h1>Rock Paper Scissors Boom!</h1>
+            <h2> Defeat the Computer! Win three points!</h2>
+    </div>
+
+     <!--Enter name field-->
+    <div class="username">
+        <label> Enter Your Name:
+        <input type="text" id="username">
+        </label>
+        <button type="button" id="play-btn">Let's Play!</button>
+    </div>
+        
+        <!--Keeps score in round of three-->
+    <div class="scoreboard">
+            <div class="user-score">
+            <span id="user-wins">0</span> 
+            <br/> 
+            <span id="user-name">User</span> 
+            </div>
+            <div class="comp-score">
+            <span id="comp-wins">0 </span>
+            <br/> Computer
+            </div>
+        </div>
+        <!--Example: User threw rock! Computer threw Paper! User Wins! -->
+    <div class="results-bar">
+
+    </div>
+
+        <!-- game buttons : Rock Paper Scissors Bomb -->
+    <div class="game-tokens">
+           
+            <button type="button" id="rock-btn">
+                <img src="/images/rock-icon.jpg">
+            </button>
+            
+            <button type="button" id="paper-btn">
+                <img src="/images/paper-icon.jpg">
+            </button>
+           
+            <button type="button" id="scissors-btn">
+                <img src="/images/scissors-icon.jpg">
+            </button>
+            
+            <button type="button" id="bomb-btn">
+                <img src="/images/bomb-icon.png">
+            </button>
+    </div>
+
+    <div class="play-again">
+        <button type="button" id="play-again-btn">Play Again!</button></div>
+
+    </div><!--container div-->
+
+    <script>
+       // Setting the score for computer and user
+        var computerScore = 0;
+        var userScore = 0;
+        var username = '';
+
+     // Getting the user's name 
+        var enterName = () => {
+        userName = document.getElementById('username').value;
+        let nameScore = document.getElementById('user-name').innerHTML= userName;
+        return nameScore;
+       
+        }
+
+        var play = document.querySelector('#play-btn');
+        play.addEventListener('click', enterName);
+        // play.onmouseup = 
+
+// trying to get computer choices by random.
+const computerChoice = () => {
+            randomNum = Math.floor(Math.random()*3);
+            switch (randomNum){
+                case 0:
+                    return 'paper';
+                    break;
+                case 1:
+                    return 'rock';
+                    break;
+                case 2: 
+                    return 'scissors';
+                    break;
+            }
+        }
+
+        // Trying to get the user's choice by button.
+        var rockChoice = document.getElementById('rock-btn');
+        rockChoice.addEventListener('click', userClick = () => {
+            
+            determineWinner('rock',computerChoice());
+        });
+        var paperChoice = document.getElementById('paper-btn');
+        paperChoice.addEventListener('click', userClick = () => {
+           
+            determineWinner('paper', computerChoice());
+        });
+        var scissorsChoice = document.getElementById('scissors-btn');
+        scissorsChoice.addEventListener('click', userClick = () => {
+           
+            determineWinner('scissors', computerChoice());
+        });
+        var bombChoice = document.getElementById('bomb-btn');
+        bombChoice.addEventListener('click', userClick = () => {
+            determineWinner('bomb');
+        });
+        
+        // Setting up  global variables that display game statements
+        var whoThrew = document.createElement('p');
+       var whoWins = document.createElement('p');
+    
+     
+        //The game that determines the winner
+        var determineWinner = (userClick, computerChoice) => {
+            // Code that tells who threw what object
+            whoThrew.innerHTML = `${enterName()} threw ${userClick}! Computer threw ${computerChoice}!`;
+            document.querySelector('.results-bar').appendChild(whoThrew);
+           
+            //The actual game part 
+          if (userClick === computerChoice){
+               whoWins.innerHTML = 'Whoops! Its a tie!';
+               document.querySelector('.results-bar').appendChild(whoWins);
+               // when its a tie, score stays the same
+               computerScore = computerScore;
+               userScore = userScore;
+              } else if (userClick === 'rock'){
+                  if (computerChoice ==='paper'){
+                     whoWins.innerHTML = 'Computer Wins a point!';
+                     document.querySelector('.results-bar').appendChild(whoWins);
+                     // whoever wins gets a point
+                     computerScore = computerScore + 1; 
+                      } else {
+                    whoWins.innerHTML = `${enterName()} Wins a point!`;
+                    document.querySelector('.results-bar').appendChild(whoWins);
+                     userScore = userScore + 1;
+                    }
+                } else if (userClick === 'paper'){
+                if (computerChoice === 'scissors'){
+                    whoWins.innerHTML = 'Computer Wins a point!';
+                     document.querySelector('.results-bar').appendChild(whoWins);
+                    computerScore = computerScore + 1;
+                } else {
+                    whoWins.innerHTML = `${enterName()} Wins a point!`;
+                    document.querySelector('.results-bar').appendChild(whoWins);
+                    userScore = userScore + 1;
+                }
+            } else if (userClick === 'scissors'){
+                if (computerChoice === 'rock'){
+                    whoWins.innerHTML = 'Computer Wins a point!';
+                     document.querySelector('.results-bar').appendChild(whoWins);
+                    computerScore = computerScore + 1;
+                } else {
+                    whoWins.innerHTML = `${enterName()} Wins a point!`;
+                    document.querySelector('.results-bar').appendChild(whoWins);
+                    userScore = userScore + 1;
+                }
+            }
+            
+            // bomb button function that automatically lets the user win
+            if ( userClick === 'bomb'){
+                
+                whoThrew.innerHTML = `${enterName()} threw ${userClick}! Computer dies!`;
+                document.querySelector('.results-bar').appendChild(whoThrew);
+                whoWins.innerHTML = `UH OH! EVERYTHING IS DESTROYED! ${enterName()} WINS THE GAME!`;
+                document.querySelector('.results-bar').appendChild(whoWins);
+                document.querySelector('.game-tokens').style.display = "none";
+                bombChange();
+            }
+
+            // scoreboard function
+            document.getElementById('user-wins').innerHTML = userScore;
+            document.getElementById('comp-wins').innerHTML = computerScore;
+            // Who wins after three games
+            if (userScore === 3){
+                whoWins.innerHTML = `${enterName()} Wins the game!`;
+                document.querySelector('.results-bar').appendChild(whoWins);
+                document.querySelector('.game-tokens').style.display = "none";
+            }  else if (computerScore === 3){
+                whoWins.innerHTML = 'Computer Wins the game!';
+                document.querySelector('.results-bar').appendChild(whoWins);
+                document.querySelector('.game-tokens').style.display = "none";
+            } 
+        }
+
+    
+
+
+
+      const bombChange = () =>{
+         var scoreboardRed = document.querySelector('.scoreboard').setAttribute('style', 'background:red; border: solid, black;')
+      }
+      const resetGame = () =>{
+        location.reload();
+        }
+
+      playAgain = document.getElementById('play-again-btn');
+      playAgain.addEventListener('click', resetGame);        
+     
+       
+
+    </script>
+</body>
+</html>
