@@ -75,14 +75,16 @@
      // Getting the user's name 
         var enterName = () => {
         userName = document.getElementById('username').value;
+        
         let nameScore = document.getElementById('user-name').innerHTML= userName;
         return nameScore;
-       
+        
         }
+       
 
         var play = document.querySelector('#play-btn');
         play.addEventListener('click', enterName);
-        // play.onmouseup = 
+
 
 // trying to get computer choices by random.
 const computerChoice = () => {
@@ -190,20 +192,24 @@ const computerChoice = () => {
             if (userScore === 3){
                 whoWins.innerHTML = `${enterName()} Wins the game!`;
                 document.querySelector('.results-bar').appendChild(whoWins);
+                document.querySelector('.user-score').style.backgroundColor = "#FCFF4B";
+                document.querySelector('.user-score').style.color = "black";
                 document.querySelector('.game-tokens').style.display = "none";
+            
             }  else if (computerScore === 3){
                 whoWins.innerHTML = 'Computer Wins the game!';
                 document.querySelector('.results-bar').appendChild(whoWins);
+                document.querySelector('.comp-score').style.backgroundColor = "#FCFF4B";
+                document.querySelector('.comp-score').style.color = "black";
+             
                 document.querySelector('.game-tokens').style.display = "none";
             } 
         }
 
     
 
-
-
       const bombChange = () =>{
-         var scoreboardRed = document.querySelector('.scoreboard').setAttribute('style', 'background:red; border: solid, black;')
+         var scoreboardRed = document.querySelector('.scoreboard').setAttribute('style', 'background:red; border: none;')
       }
       const resetGame = () =>{
         location.reload();
